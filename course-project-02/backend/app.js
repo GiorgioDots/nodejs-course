@@ -67,7 +67,11 @@ mongoose
   )
   .then(result => {
     console.log("connected to mongodb server");
-    app.listen(8080);
+    const server = app.listen(8080);
+    const io = require("./socket").init(server);
+    io.on("connection", socket => {
+      console.log("WS Client connected");
+    });
   })
   .catch(err => {
     console.log(err);
